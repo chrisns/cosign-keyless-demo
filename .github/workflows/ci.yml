@@ -58,8 +58,7 @@ jobs:
           labels: ${{ steps.docker_meta.outputs.labels }}
 
     outputs:
-      tags: ${{ teps.docker_meta.outputs.tags }}
-      output2: ${{ steps.step2.outputs.test }}
+      tags: ${{ steps.docker_meta.outputs.tags }}
 
   sign:
     runs-on: ubuntu-latest
