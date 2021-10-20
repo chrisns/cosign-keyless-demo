@@ -61,6 +61,7 @@ jobs:
       tags: ${{ steps.docker_meta.outputs.tags }}
 
   sign:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       actions: none
