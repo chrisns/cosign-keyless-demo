@@ -1,13 +1,9 @@
-name: Build
+name: Proof of concept
 
 on:
   push:
     branches:
     - main
-  pull_request:
-    branches:
-    - main
-
 
 jobs:
   build:
@@ -23,20 +19,18 @@ jobs:
       repository-projects: none
       security-events: none
       statuses: none
-      id-token: write
+      id-token: none
 
     steps:
       - uses: actions/checkout@v1
-      - uses: sigstore/cosign-installer@main
+
       - name: Login to dockerhub
-        if: github.ref == 'refs/heads/main'
-        uses: docker/login-action@v1
+        uses: docker/login-action@v1.9.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Login to GitHub
-        if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v1.9.0
         with:
           registry: ghcr.io
@@ -62,13 +56,48 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-        
-      - run: cosign sign -oidc-issuer https://token.actions.githubusercontent.com ${TAGS}
+
+    outputs:
+      tags: ${{ teps.docker_meta.outputs.tags }}
+      output2: ${{ steps.step2.outputs.test }}
+
+  sign:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: none
+      checks: none
+      contents: none
+      deployments: none
+      issues: none
+      packages: write
+      pull-requests: none
+      repository-projects: none
+      security-events: none
+      statuses: none
+      id-token: write
+
+    steps:
+      - name: Login to dockerhub
+        uses: docker/login-action@v1.9.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Login to GitHub
+        uses: docker/login-action@v1.9.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: sigstore/cosign-installer@main
+      - name: Sign the images
+        run: cosign sign -oidc-issuer https://token.actions.githubusercontent.com ${TAGS}
         env:
-          TAGS: ${{ steps.docker_meta.outputs.tags }}
+          TAGS: ${{needs.build.outputs.tags}}
           COSIGN_EXPERIMENTAL: 1
 
-      - run: cosign verify ${TAGS}
+      - name: Verify the pushed tags
+        run: cosign verify ${TAGS}
         env:
-          TAGS: ${{ steps.docker_meta.outputs.tags }}
+          TAGS: ${{needs.build.outputs.tags}}
           COSIGN_EXPERIMENTAL: 1
