@@ -2,16 +2,26 @@
 
 [![Proof of concept](https://github.com/chrisns/cosign-keyless-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/chrisns/cosign-keyless-demo/actions/workflows/ci.yml)
 [![Security Scanning](https://github.com/chrisns/cosign-keyless-demo/actions/workflows/security.yml/badge.svg)](https://github.com/chrisns/cosign-keyless-demo/actions/workflows/security.yml)
+[![GitHub issues](https://img.shields.io/github/issues/chrisns/cosign-keyless-demo.svg)](https://github.com/chrisns/cosign-keyless-demo/issues)
+[![GitHub forks](https://img.shields.io/github/forks/chrisns/cosign-keyless-demo.svg)](https://github.com/chrisns/cosign-keyless-demo/network)
+[![GitHub stars](https://img.shields.io/github/stars/chrisns/cosign-keyless-demo.svg)](https://github.com/chrisns/cosign-keyless-demo/stargazers)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/chrisns/cosign-keyless-demo/master/LICENSE)
 
 > Proof of concept that uses cosign and GitHub's in built OIDC for actions to sign container images, providing a proof that what is in the registry came from your GitHub action.
 
-[Working example](https://github.com/chrisns/cosign-keyless-demo/actions/workflows/ci.yml)
+## Why?
+
+Lots of people are now using [OIDC from Github Actions](https://github.com/github/roadmap/issues/249) to federate auth to [AWS](https://github.com/marketplace/actions/aws-oidc-login), [GCP](https://github.com/marketplace/actions/authenticate-to-google-cloud) etc. At the same time [cosign](https://github.com/sigstore/cosign) and the overall [sigstore](https://www.sigstore.dev/) are doing great work to make signing container images and trusting the supply chain far easier.
+
+I wanted to sign images, but it felt like an anti pattern to store the long lived private key as a secret, when cosign has some [OIDC magic for keyless signing](https://github.com/sigstore/cosign/blob/main/KEYLESS.md).
+
+I've made a [working example](https://github.com/chrisns/cosign-keyless-demo/actions/workflows/ci.yml) which separates the build and the build and sign process, which might be overkill for your needs.
 
 ## Usage
 
 The very short answer is you need to add the `id-token: write` permission and then `cosign sign -oidc-issuer https://token.actions.githubusercontent.com`
 
-To see that in action see the abridged spec:
+To see that in action see the abridged workflow:
 
 ```yaml
 name: Build Push Sign
@@ -63,7 +73,7 @@ We can now do:
 $ COSIGN_EXPERIMENTAL=1 cosign verify -output text ghcr.io/chrisns/cosign-keyless-demo:latest
 ```
 
-and get back, note the subject is `"https://github.com/chrisns/cosign-keyless-demo/.github/workflows/ci.yml@refs/heads/main"`
+and get back, note the subject is `https://github.com/chrisns/cosign-keyless-demo/.github/workflows/ci.yml@refs/heads/main`
 
 ```json
 [
