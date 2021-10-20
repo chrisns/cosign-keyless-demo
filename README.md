@@ -5,7 +5,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/chrisns/cosign-keyless-demo.svg)](https://github.com/chrisns/cosign-keyless-demo/issues)
 [![GitHub forks](https://img.shields.io/github/forks/chrisns/cosign-keyless-demo.svg)](https://github.com/chrisns/cosign-keyless-demo/network)
 [![GitHub stars](https://img.shields.io/github/stars/chrisns/cosign-keyless-demo.svg)](https://github.com/chrisns/cosign-keyless-demo/stargazers)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/chrisns/cosign-keyless-demo/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/chrisns/cosign-keyless-demo/main/LICENSE)
 
 > Proof of concept that uses cosign and GitHub's in built OIDC for actions to sign container images, providing a proof that what is in the registry came from your GitHub action.
 
@@ -13,7 +13,7 @@
 
 ## Why?
 
-Lots of people are now using [OIDC from Github Actions](https://github.com/github/roadmap/issues/249) to federate auth to [AWS](https://github.com/marketplace/actions/aws-oidc-login), [GCP](https://github.com/marketplace/actions/authenticate-to-google-cloud) etc. At the same time [cosign](https://github.com/sigstore/cosign) and the overall [sigstore](https://www.sigstore.dev/) are doing great work to make signing container images and trusting the supply chain far easier.
+Lots of people are now using [OIDC from Github Actions](https://github.com/github/roadmap/issues/249) to federate auth to [AWS](https://awsteele.com/blog/2021/09/15/aws-federation-comes-to-github-actions.html), [GCP](https://github.com/marketplace/actions/authenticate-to-google-cloud) etc. At the same time [cosign](https://github.com/sigstore/cosign) and the overall [sigstore](https://www.sigstore.dev/) are doing great work to make signing container images and trusting the supply chain far easier.
 
 I wanted to sign images, but it felt like an anti pattern to store the long lived private key as a secret, when cosign has some [OIDC magic for keyless signing](https://github.com/sigstore/cosign/blob/main/KEYLESS.md).
 
@@ -183,3 +183,4 @@ And we can inspect the certificate to check it
 - https://github.com/sigstore/cosign/blob/main/KEYLESS.md
 - https://github.com/sigstore/cosign-installer
 - https://blog.alexellis.io/deploy-without-credentials-using-oidc-and-github-actions/
+- https://awsteele.com/blog/2021/09/15/aws-federation-comes-to-github-actions.html
