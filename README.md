@@ -9,6 +9,8 @@
 
 > Proof of concept that uses cosign and GitHub's in built OIDC for actions to sign container images, providing a proof that what is in the registry came from your GitHub action.
 
+## I ❤️ Pull Requests
+
 ## Why?
 
 Lots of people are now using [OIDC from Github Actions](https://github.com/github/roadmap/issues/249) to federate auth to [AWS](https://github.com/marketplace/actions/aws-oidc-login), [GCP](https://github.com/marketplace/actions/authenticate-to-google-cloud) etc. At the same time [cosign](https://github.com/sigstore/cosign) and the overall [sigstore](https://www.sigstore.dev/) are doing great work to make signing container images and trusting the supply chain far easier.
