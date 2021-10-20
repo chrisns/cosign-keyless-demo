@@ -15,7 +15,7 @@ jobs:
     permissions:
       actions: none
       checks: none
-      contents: write
+      contents: none
       deployments: none
       issues: none
       packages: write
@@ -62,9 +62,9 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-
-      - name: Setup Debug Session
+        
+      - run: cosign sign -oidc-issuer https://token.actions.githubusercontent.com ${TAGS}
         env:
           TAGS: ${{ steps.docker_meta.outputs.tags }}
-          TMATE_ENCRYPT_PASSWORD: ${{secrets.TMATE_ENCRYPT_PASSWORD}}
-        uses: tete1030/safe-debugger-action@master
+          COSIGN_EXPERIMENTAL: 1
+
