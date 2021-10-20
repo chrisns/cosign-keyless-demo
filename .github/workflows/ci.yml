@@ -23,8 +23,9 @@ jobs:
       repository-projects: none
       security-events: none
       statuses: none
+      id-token: write
 
-    steps:
+      steps:
       - uses: actions/checkout@v1
       - uses: sigstore/cosign-installer@main
       - name: Setup Debug Session
