@@ -57,8 +57,7 @@ jobs:
 
       - name: Sign the images
         run: |
-          cosign sign -oidc-issuer \
-            https://token.actions.githubusercontent.com \
+          cosign sign \
             ghcr.io/chrisns/cosign-keyless-demo:latest
         env:
           COSIGN_EXPERIMENTAL: 1
@@ -176,6 +175,18 @@ And we can inspect the certificate to check it
          31:00:83:8b:e5:da:ea:51:98:47:2f:92:41:69:f6:0a:76:9c:
          c1:6a:b4:96:7f:7c:8f:1e:ab:a8:14:d3:d4:ed:01:f5:94:88:
          b5:88:e1:ad:f9:28:e2:a1:c6:c7:2c:33:84:2b
+```
+
+A shorthand for extracting the public certificate is:
+
+```shell
+$ COSIGN_EXPERIMENTAL=1 cosign verify \
+  -output json \
+  ghcr.io/chrisns/cosign-keyless-demo:latest \
+  | jq -r '.[0].optional.Bundle.Payload.body' \
+  | base64 -d \
+  | jq -r .spec.signature.publicKey.content \
+  | base64 -d
 ```
 
 ## References
