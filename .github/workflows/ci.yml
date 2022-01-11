@@ -25,13 +25,13 @@ jobs:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # renovate: tag=v2.4.0
 
       - name: Login to dockerhub
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9 # renovate: tag=v1.10.0
+        uses: docker/login-action@42d299face0c5c43a0487c477f595ac9cf22f1a7 # renovate: tag=v1.12.0
         with:
           username: chrisns
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Login to GitHub
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9 # renovate: tag=v1.10.0
+        uses: docker/login-action@42d299face0c5c43a0487c477f595ac9cf22f1a7 # renovate: tag=v1.12.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -78,13 +78,13 @@ jobs:
 
     steps:
       - name: Login to dockerhub
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9 # renovate: tag=v1.10.0
+        uses: docker/login-action@42d299face0c5c43a0487c477f595ac9cf22f1a7 # renovate: tag=v1.12.0
         with:
           username: chrisns
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Login to GitHub
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9 # renovate: tag=v1.10.0
+        uses: docker/login-action@42d299face0c5c43a0487c477f595ac9cf22f1a7 # renovate: tag=v1.12.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
