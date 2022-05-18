@@ -21,7 +21,7 @@ I've made a [working example](https://github.com/chrisns/cosign-keyless-demo/act
 
 ## Usage
 
-The very short answer is you need to add the `id-token: write` permission and then `cosign sign -oidc-issuer https://token.actions.githubusercontent.com`
+The very short answer is you need to add the `id-token: write` permission and then `cosign sign`
 
 To see that in action see the abridged workflow:
 
