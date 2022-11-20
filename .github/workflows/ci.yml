@@ -90,7 +90,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: sigstore/cosign-installer@536b37ec5d5b543420bdfd9b744c5965bd4d8730 # tag=v2.3.0
+      - uses: sigstore/cosign-installer@9becc617647dfa20ae7b1151972e9b3a2c338a2b # v2.8.1
       - name: Sign the images
         run: cosign sign ${TAGS}
         env:
